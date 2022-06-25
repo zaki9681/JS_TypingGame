@@ -2,9 +2,8 @@
 
 {
     function setWord() {
-        
         word = words.splice(Math.floor(Math.random() * words.length), 1)[0];
-        target.textContent = word;
+        target.innerHTML = `<span>${word}</span>`;
         loc = 0;
     }
     
@@ -32,7 +31,6 @@
         }  
     })
     
-    
     document.addEventListener('keydown', e => {
         
         // 打った文字が異なる場合はここで処理を抜ける
@@ -44,11 +42,12 @@
         // 処理を抜けない場合、つまり打った文字が正しい場合となるので分岐は書かなくてもOKとなる
         loc++;
         
-        // 1: _ed
-        // 2: __d
-        target.textContent = '_'.repeat(loc) + word.substring(loc);
-        
+        // 入力したものはclass付きのspanに差し替え
+        target.innerHTML = `<span class="typed">${word.substring(0, loc)}</span><span>${word.substring(loc)}</span>`;
+
+        // locが入力文字数と一致した場合、つまり単語の最後まで入力し切った場合
         if(loc === word.length) {
+            // lengthが0、つまり最後の単語まで入力し切った場合
             if(words.length === 0) {
                 const elapsedTime = ((Date.now() - startTime) / 1000).toFixed(2);
                 const result = document.getElementById('result');
